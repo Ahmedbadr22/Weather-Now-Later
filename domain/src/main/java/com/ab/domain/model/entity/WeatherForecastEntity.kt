@@ -27,5 +27,4 @@ data class WeatherForecastEntity(
     val humidity: Int,
     val windSpeed: Double,
     val windDirectionInDegree: Int,
-    val windGust: Double,
 )

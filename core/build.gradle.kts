@@ -16,6 +16,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            val  apiKey = project.properties["APP_KEY"] ?: "N/A"
+            buildConfigField("String", "APP_KEY", "\"${apiKey}\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(

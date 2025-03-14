@@ -7,7 +7,7 @@ import com.ab.core.utils.constants.DB.CITY_TABLE_NAME
 @Entity(tableName = CITY_TABLE_NAME)
 data class CityEntity(
     @PrimaryKey
-    val id: Int,
+    val id: Long,
     val name: String,
     val longitude: Double,
     val latitude: Double,

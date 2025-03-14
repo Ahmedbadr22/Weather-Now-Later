@@ -1,4 +1,4 @@
-package com.ab.data.source.local.dao
+package com.ab.data.source.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,5 +8,5 @@ import com.ab.domain.model.entity.WeatherConditionEntity
 @Dao
 interface WeatherConditionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: WeatherConditionEntity)
+    suspend fun insert(entity: WeatherConditionEntity): Long
 }

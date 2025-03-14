@@ -1,4 +1,4 @@
-package com.ab.data.source.local.dao
+package com.ab.data.source.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -9,6 +9,6 @@ import com.ab.domain.model.entity.CityEntity
 interface CityDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: CityEntity): Int
+    suspend fun insert(entity: CityEntity): Long
 
 }

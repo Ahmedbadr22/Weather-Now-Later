@@ -16,13 +16,15 @@ android {
     }
 
     buildTypes {
+        val  apiKey = project.properties["APP_KEY"] ?: "N/A"
+
         debug {
             isMinifyEnabled = false
-            val  apiKey = project.properties["APP_KEY"] ?: "N/A"
             buildConfigField("String", "APP_KEY", "\"${apiKey}\"")
         }
         release {
             isMinifyEnabled = false
+            buildConfigField("String", "APP_KEY", "\"${apiKey}\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -39,6 +41,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -54,4 +57,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bad_request_message">
+        Bad request. Please try again later or contact support if the issue persists.\nDetail: %s
+    </string>
+    <string name="not_found_network_error_msg">
+        Sorry, can\'t find your request now, please try again later.\nDetail: %s
+    </string>
+    <string name="unknown_error">
+        Sorry, an unexpected error occurred. Please try again.\nDetails: %s
+    </string>
+    <string name="server_error">
+        Server error. Please try again later or contact support if the issue persists.\nDetail: %s
+    </string>
+    <string name="unknown_host_error">
+        We couldn’t connect to the server.\nDetails: %s
+    </string>
+    <string name="io_error_message_with_details">
+        We couldn’t complete your request due to an IO issue.\nDetails: %s
+    </string>
+    <string name="timeout_error">
+        The connection took too long. Please try again in a few moments.\nDetails: %s
+    </string>
+
+    <string name="un_authorized_error">
+        UnAuthorized Request.\nDetails: %s
+    </string>
+
+
+    <string name="socket_error_message_with_details">
+        We couldn\'t complete your request due to a network issue.
+        Your connection was interrupted, or the server unexpectedly closed the connection.
+        \nDetails: %s
+    </string>
+
+
+    <string name="network_error">
+        There seems to be a network issue. Please check your connection and try again or contact support if the issue persists.
+        \n
+        Details: %s
+    </string>
+    <string name="malformed_data_error">We encountered an error processing the server’s response. Please try again later.</string>
+    <string name="generic_error">
+        Oops! Something went wrong. Please try again.
+        \n
+        Details: %s
+    </string>
+    <string name="error_user_data_not_found">
+        The requested user data is currently unavailable. Please try again later or contact support if the issue persists.
+    </string>
+</resources>

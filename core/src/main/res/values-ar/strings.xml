@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bad_request_message">
+        طلب خاطئ. من فضلك حاول مرة اخري او تواصل مع الدعم الفني اذا تكررت المشكلة
+        \nالتفاصيل: %s
+    </string>
+    <string name="not_found_network_error_msg">
+        لايمكن الوصول الي طلبك الان. من فضلك كرر المحاولة في وقت لاحق
+        \nالتفاصيل: %s
+    </string>
+    <string name="unknown_error">
+        عذراً، حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.
+        \nالتفاصيل: %s
+    </string>
+    <string name="server_error">
+        خطأ بالخادم. من فضلك حاول في وقت اخر او قم بالتواصل مع الدعم الفني اذا استمرت المشكلة
+        \nالتفاصيل: %s
+    </string>
+    <string name="unknown_host_error">
+        لم نستطع الاتصال بالخادم.
+        \nالتفاصيل: %s
+    </string><string name="un_authorized_error">
+        طلب غير مصدق عليه من فضلك قم بارسال مفتاح التطبيق.
+        \nالتفاصيل: %s
+    </string>
+    <string name="io_error_message_with_details">
+        (I/O) لا يمكن اكمال طلب بسبب مشكلة
+        \nالتفاصيل: %s
+    </string>
+    <string name="timeout_error">
+        استغرق الاتصال وقتاً طويلاً. يرجى المحاولة مرة أخرى بعد قليل.
+        /nالتفاصيل: %s
+    </string>
+
+
+    <string name="socket_error_message_with_details">
+        لم نتمكن من إكمال طلبك بسبب مشكلة في الشبكة.
+        تم قطع الاتصال أو قام الخادم بإنهاء الاتصال بشكل غير متوقع.
+        /nالتفاصيل: %s
+    </string>
+
+    <string name="network_error">يبدو أن هناك مشكلة في الشبكة. يرجى التحقق من اتصالك والمحاولة مرة أخرى.</string>
+    <string name="malformed_data_error">واجهنا مشكلة في معالجة استجابة الخادم. يرجى المحاولة مرة أخرى لاحقاً.</string>
+    <string name="generic_error">عذراً! حدث خطأ ما. يرجى المحاولة مرة أخرى.</string>
+
+    <string name="error_user_data_not_found">
+        بيانات المستخدم المطلوبة غير متوفرة حالياً. يرجى المحاولة مرة أخرى لاحقاً أو التواصل مع فريق الدعم إذا استمرت المشكلة.
+    </string>
+</resources>

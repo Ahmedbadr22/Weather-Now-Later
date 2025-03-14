@@ -57,4 +57,11 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation("org.mockito:mockito-core:4.0.0")
+    testImplementation("org.mockito:mockito-inline:4.0.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.0.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
 }

@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 import java.util.concurrent.TimeUnit
 
-class WeatherForecastRemoteDataSourceIntegrationTest {
+class WeatherForecastClientServiceTest {
 
     private lateinit var mockWebServer: MockWebServer
     private lateinit var apiService: WeatherForecastClientService

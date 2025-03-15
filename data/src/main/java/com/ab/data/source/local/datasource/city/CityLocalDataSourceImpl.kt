@@ -15,4 +15,22 @@ class CityLocalDataSourceImpl @Inject constructor (
             cityDao.insert(cityEntity)
         }
     }
+
+    override suspend fun getAll(): List<CityEntity> {
+        return withContext(Dispatchers.IO) {
+            cityDao.getAll()
+        }
+    }
+
+    override suspend fun getById(id: Long): CityEntity? {
+        return withContext(Dispatchers.IO) {
+            cityDao.getById(id)
+        }
+    }
+
+    override suspend fun deleteById(id: Long) {
+        withContext(Dispatchers.IO) {
+            cityDao.deleteById(id)
+        }
+    }
 }

@@ -6,12 +6,17 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ab.data.source.local.datasource.city.CityLocalDataSource
 import com.ab.data.source.local.datasource.city.CityLocalDataSourceImpl
+import com.ab.data.source.local.datasource.weather_condition.WeatherConditionLocalDataSource
+import com.ab.data.source.local.datasource.weather_condition.WeatherConditionLocalDataSourceImpl
 import com.ab.data.source.local.datasource.weather_forecast.WeatherForecastLocalDataSource
 import com.ab.data.source.local.datasource.weather_forecast.WeatherForecastLocalDataSourceImpl
 import com.ab.data.source.local.db.WeatherNowLaterDatabase
 import com.ab.data.source.local.db.dao.CityDao
+import com.ab.data.source.local.db.dao.WeatherConditionDao
 import com.ab.data.source.local.db.dao.WeatherForecastDao
 import com.ab.domain.model.entity.CityEntity
+import com.ab.domain.model.entity.TemperatureEntity
+import com.ab.domain.model.entity.WeatherConditionEntity
 import com.ab.domain.model.entity.WeatherForecastEntity
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -21,7 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class WeatherForecastLocalDataSourceImplTest {
+class WeatherConditionLocalDataSourceImplTest {
 
     private lateinit var database: WeatherNowLaterDatabase
 
@@ -31,7 +36,14 @@ class WeatherForecastLocalDataSourceImplTest {
     private lateinit var weatherForecastLocalDataSource: WeatherForecastLocalDataSource
     private lateinit var cityLocalDataSource: CityLocalDataSource
 
+    private lateinit var weatherConditionDao: WeatherConditionDao
+    private lateinit var weatherConditionLocalDataSource: WeatherConditionLocalDataSource
+
     private lateinit var context: Context
+
+    private lateinit var cityDummyEntity: CityEntity
+    private lateinit var weatherForecastDummyEntity: WeatherForecastEntity
+    private lateinit var weatherConditionDummyEntity: WeatherConditionEntity
 
 
     @Before
@@ -46,16 +58,12 @@ class WeatherForecastLocalDataSourceImplTest {
 
         weatherForecastLocalDataSource = WeatherForecastLocalDataSourceImpl(weatherForecastDao)
         cityLocalDataSource = CityLocalDataSourceImpl(cityDao)
-    }
 
-    @After
-    fun tearDown() {
-        database.close()
-    }
+        weatherConditionDao = database.getWeatherConditionDao()
+        weatherConditionLocalDataSource = WeatherConditionLocalDataSourceImpl(weatherConditionDao)
 
-    @Test
-    fun insertWeatherForecast_returnId() = runTest {
-        val city = CityEntity(
+
+        cityDummyEntity = CityEntity(
             id = 1,
             name = "Cairo",
             latitude = 30.0444,
@@ -65,11 +73,9 @@ class WeatherForecastLocalDataSourceImplTest {
             population = 7734614
         )
 
-        val createdCityId = cityLocalDataSource.insert(city)
-
-        val weatherForecastEntity = WeatherForecastEntity(
+        weatherForecastDummyEntity = WeatherForecastEntity(
             id = 1,
-            cityId = createdCityId,
+            cityId = 0,
             dateTimestamp = 1741946400,
             sunrise = 1741925173,
             sunset = 1741968140,
@@ -79,8 +85,29 @@ class WeatherForecastLocalDataSourceImplTest {
             windDirectionInDegree = 41
         )
 
-        val result = weatherForecastLocalDataSource.insert(weatherForecastEntity)
+        weatherConditionDummyEntity = WeatherConditionEntity(
+            id = 1,
+            forecastId = 0,
+            weatherId = 800,
+            main = "Clear",
+            description = "clear sky",
+            icon = "01d"
+        )
+    }
 
-        assertEquals(1, result)
+    @After
+    fun tearDown() {
+        database.close()
+    }
+
+    @Test
+    fun insertWeatherCondition_returnId() = runTest {
+        val insertedCityId = cityLocalDataSource.insert(cityDummyEntity)
+
+        val insertedWeatherForecastId = weatherForecastLocalDataSource.insert(weatherForecastDummyEntity.copy(cityId = insertedCityId))
+
+        val insertedWeatherConditionId = weatherConditionLocalDataSource.insert(weatherConditionDummyEntity.copy(forecastId = insertedWeatherForecastId))
+
+        assertEquals(1, insertedWeatherConditionId)
     }
 }

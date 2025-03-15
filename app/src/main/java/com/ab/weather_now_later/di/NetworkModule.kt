@@ -1,5 +1,6 @@
 package com.ab.weather_now_later.di
 
+import com.ab.core.utils.network.AuthInterceptor
 import com.ab.data.source.remote.service.WeatherForecastClientService
 import com.ab.weather_now_later.BuildConfig.BASE_URL
 import com.google.gson.Gson
@@ -25,6 +26,7 @@ object NetworkModule {
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(90, TimeUnit.SECONDS)
             .callTimeout(90, TimeUnit.SECONDS)
+            .addInterceptor(AuthInterceptor())
             .build()
 
     }

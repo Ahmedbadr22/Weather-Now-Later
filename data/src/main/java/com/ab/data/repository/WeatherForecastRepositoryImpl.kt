@@ -4,6 +4,7 @@ import com.ab.data.source.local.datasource.city.CityLocalDataSource
 import com.ab.data.source.local.datasource.temperature.TemperatureLocalDataSource
 import com.ab.data.source.local.datasource.weather_condition.WeatherConditionLocalDataSource
 import com.ab.data.source.local.datasource.weather_forecast.WeatherForecastLocalDataSource
+import com.ab.data.source.local.db.relations.CityWithWeatherForecastDetailsEntityRel
 import com.ab.data.source.remote.datasource.WeatherForecastRemoteDataSource
 import com.ab.domain.model.dto.WeatherForecastResponseDto
 import com.ab.domain.model.entity.CityEntity
@@ -20,6 +21,7 @@ class WeatherForecastRepositoryImpl @Inject constructor(
     private val temperatureLocalDataSource: TemperatureLocalDataSource,
     private val weatherConditionLocalDataSource: WeatherConditionLocalDataSource
 ) : WeatherForecastRepository {
+    private val cache: MutableMap<String, CityWithWeatherForecastDetailsEntityRel> = mutableMapOf()
 
     override suspend fun fetchWeatherForecastByCityFromRemote(
         cityName: String,

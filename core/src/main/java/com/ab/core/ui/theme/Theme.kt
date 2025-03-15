@@ -1,4 +1,4 @@
-package com.ab.weather_now_later.ui.theme
+package com.ab.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

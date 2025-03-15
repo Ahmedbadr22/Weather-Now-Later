@@ -22,7 +22,7 @@ interface CityDao {
     suspend fun getAllWithRelations(): List<CityWithWeatherForecastDetailsEntityRel>
 
     @Transaction
-    @Query("SELECT * FROM $CITY_TABLE_NAME WHERE name =:name")
+    @Query("SELECT * FROM $CITY_TABLE_NAME WHERE name LIKE '%' || :name || '%'")
     suspend fun getCityWeatherForecastByName(name: String): CityWithWeatherForecastDetailsEntityRel?
 
     @Query("SELECT * FROM $CITY_TABLE_NAME WHERE id = :id")

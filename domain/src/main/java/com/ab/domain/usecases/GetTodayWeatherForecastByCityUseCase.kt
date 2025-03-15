@@ -4,6 +4,7 @@ import com.ab.core.R
 import com.ab.core.utils.base.Resource
 import com.ab.core.utils.error.ExceptionHandler
 import com.ab.core.utils.error.Failure
+import com.ab.core.utils.isToday
 import com.ab.core.utils.resource.ResourceProvider
 import com.ab.domain.mapper.toModel
 import com.ab.domain.model.model.TodayWeatherForecast
@@ -11,7 +12,6 @@ import com.ab.domain.repository.WeatherForecastRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import java.time.Instant
 
 class GetTodayWeatherForecastByCityUseCase(
     private val weatherForecastRepository: WeatherForecastRepository,
@@ -31,10 +31,8 @@ class GetTodayWeatherForecastByCityUseCase(
             return@flow
         }
 
-        val todayTimestamp = Instant.now().epochSecond
-
         val currentWeatherForecast = cityWeatherForecast.weatherForecastDetails.find { weatherForecastEntity ->
-            weatherForecastEntity.weatherForecast.dateTimestamp == todayTimestamp
+            isToday(weatherForecastEntity.weatherForecast.dateTimestamp)
         }
 
         if (currentWeatherForecast == null) {
@@ -51,6 +49,8 @@ class GetTodayWeatherForecastByCityUseCase(
             name = cityWeatherForecast.city.name,
             country = cityWeatherForecast.city.country,
             population = cityWeatherForecast.city.population,
+            longitude = cityWeatherForecast.city.longitude,
+            latitude = cityWeatherForecast.city.latitude,
             weatherForecast = currentWeatherForecast.toModel()
         )
 

@@ -55,4 +55,8 @@
     <string name="no_weather_forecast_today">
         No weather forecast found today.
     </string>
+
+    <string name="this_field_cant_be_empty">">
+        This field can't be empty.
+    </string>
 </resources>

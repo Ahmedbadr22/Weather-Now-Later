@@ -62,4 +62,10 @@ dependencies {
 
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.android)
+
+    implementation(libs.coil.compose)
+
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.accompanist.permissions)
 }

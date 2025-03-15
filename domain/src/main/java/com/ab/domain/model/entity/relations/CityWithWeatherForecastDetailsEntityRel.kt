@@ -1,4 +1,4 @@
-package com.ab.data.source.local.db.relations
+package com.ab.domain.model.entity.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation

@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class WeatherForecastDto(
-    @SerializedName("dt") val dateTimestamp: Long,
+    @SerializedName("dt")
+    val dateTimestamp: Long,
     val sunrise: Long,
     val sunset: Long,
     @SerializedName("temp")

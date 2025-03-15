@@ -48,4 +48,11 @@
     <string name="error_user_data_not_found">
         The requested user data is currently unavailable. Please try again later or contact support if the issue persists.
     </string>
+
+    <string name="no_city_found_with_this_name">
+        No City Found With This Name.
+    </string>
+    <string name="no_weather_forecast_today">
+        No weather forecast found today.
+    </string>
 </resources>

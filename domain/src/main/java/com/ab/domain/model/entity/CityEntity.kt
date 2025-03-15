@@ -12,6 +12,6 @@ data class CityEntity(
     val longitude: Double,
     val latitude: Double,
     val country: String,
-    val population: Int,
+    val population: Long,
     val timezone: Int
 )

@@ -46,4 +46,11 @@
     <string name="error_user_data_not_found">
         بيانات المستخدم المطلوبة غير متوفرة حالياً. يرجى المحاولة مرة أخرى لاحقاً أو التواصل مع فريق الدعم إذا استمرت المشكلة.
     </string>
+    <string name="no_city_found_with_this_name">
+        لم يتم العثور علي مدينة بهذا الاسم
+    </string>
+
+    <string name="no_weather_forecast_today">
+        لم يتم العثور على توقعات الطقس اليوم.
+    </string>
 </resources>

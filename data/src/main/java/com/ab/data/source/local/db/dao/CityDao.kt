@@ -4,8 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.ab.core.utils.constants.DB.CITY_TABLE_NAME
-import com.ab.data.source.local.db.relations.CityWithWeatherForecastDetailsEntityRel
+import com.ab.domain.model.entity.relations.CityWithWeatherForecastDetailsEntityRel
 import com.ab.domain.model.entity.CityEntity
 
 @Dao
@@ -16,8 +17,13 @@ interface CityDao {
     @Query("SELECT * FROM $CITY_TABLE_NAME")
     suspend fun getAll(): List<CityEntity>
 
+    @Transaction
     @Query("SELECT * FROM $CITY_TABLE_NAME")
     suspend fun getAllWithRelations(): List<CityWithWeatherForecastDetailsEntityRel>
+
+    @Transaction
+    @Query("SELECT * FROM $CITY_TABLE_NAME WHERE name =:name")
+    suspend fun getCityWeatherForecastByName(name: String): CityWithWeatherForecastDetailsEntityRel?
 
     @Query("SELECT * FROM $CITY_TABLE_NAME WHERE id = :id")
     suspend fun getById(id: Long): CityEntity?

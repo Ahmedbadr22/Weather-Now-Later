@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -68,7 +71,7 @@ fun TodayCityWeatherScreen(
                 .fillMaxSize(),
 
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(26.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -111,26 +114,13 @@ fun TodayCityWeatherScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
-                        .height(150.dp)
+                        .height(140.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        TemperatureGauge(
-                            currentTemp = todayWeatherForecast.weatherForecast.temperature.nightTemp.toInt(),
-                            minTemp = todayWeatherForecast.weatherForecast.temperature.minTemp.toInt(),
-                            maxTemp = todayWeatherForecast.weatherForecast.temperature.maxTemp.toInt(),
-                            windSpeed = "${todayWeatherForecast.weatherForecast.windSpeed} mph"
-                        )
-                    }
                     Box(
                         modifier = Modifier
                             .weight(1f)
-                            .fillMaxHeight()
+                            .fillMaxHeight(),
+                        contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
                             model = "https://openweathermap.org/img/wn/${todayWeatherForecast.weatherForecast.weatherCondition.icon}@2x.png",
@@ -139,6 +129,20 @@ fun TodayCityWeatherScreen(
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        TemperatureGauge(
+                            currentTemp = todayWeatherForecast.weatherForecast.temperature.nightTemp.toInt(),
+                            minTemp = todayWeatherForecast.weatherForecast.temperature.minTemp.toInt(),
+                            maxTemp = todayWeatherForecast.weatherForecast.temperature.maxTemp.toInt(),
+                            windSpeed = "${todayWeatherForecast.weatherForecast.windSpeed} mph"
+                        )
+                    }
+
                 }
                 Column(
                     modifier = Modifier
@@ -155,8 +159,16 @@ fun TodayCityWeatherScreen(
                     )
                 }
 
-
-
+                OutlinedButton(
+                    modifier = Modifier.fillMaxWidth(0.85f),
+                    onClick = {},
+                    shape = RoundedCornerShape(5),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onBackground
+                    )
+                ) {
+                    Text("Show 7 Day Forecast")
+                }
 
                 GoogleMap(
                     modifier = Modifier.fillMaxSize(),

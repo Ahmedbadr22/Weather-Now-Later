@@ -1,6 +1,7 @@
 package com.ab.today_city_weather
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -25,12 +27,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ab.core.ui.theme.WeatherNowLaterTheme
 import com.ab.domain.model.model.TodayWeatherForecast
+import com.ab.weatherutils.WeatherFormatter
+import com.ab.weatherutils.WeatherIcons
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -46,7 +52,7 @@ fun TodayCityWeatherScreen(
     onCityNameChange: (String) -> Unit,
     onGetWeatherForecast: () -> Unit
 ) {
-
+    val context = LocalContext.current
     val cameraPosition = rememberCameraPositionState()
 
     LaunchedEffect(todayWeatherForecast) {
@@ -122,11 +128,15 @@ fun TodayCityWeatherScreen(
                             .fillMaxHeight(),
                         contentAlignment = Alignment.Center
                     ) {
-                        AsyncImage(
-                            model = "https://openweathermap.org/img/wn/${todayWeatherForecast.weatherForecast.weatherCondition.icon}@2x.png",
-                            contentDescription = "Sample Image",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxWidth()
+                        Image(
+                            modifier = Modifier
+                                .size(100.dp),
+                            painter = painterResource(
+                                WeatherIcons.getWeatherIconRes(
+                                    todayWeatherForecast.weatherForecast.weatherCondition.main
+                                )
+                            ),
+                            contentDescription = null
                         )
                     }
                     Box(
@@ -139,7 +149,7 @@ fun TodayCityWeatherScreen(
                             currentTemp = todayWeatherForecast.weatherForecast.temperature.nightTemp.toInt(),
                             minTemp = todayWeatherForecast.weatherForecast.temperature.minTemp.toInt(),
                             maxTemp = todayWeatherForecast.weatherForecast.temperature.maxTemp.toInt(),
-                            windSpeed = "${todayWeatherForecast.weatherForecast.windSpeed} mph"
+                            windSpeed = WeatherFormatter.formatWindSpeed(todayWeatherForecast.weatherForecast.windSpeed)
                         )
                     }
 

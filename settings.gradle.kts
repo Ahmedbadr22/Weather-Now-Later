@@ -14,6 +14,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -25,4 +26,4 @@ include(":core")
 include(":data")
 include(":domain")
 include(":feature:today_city_weather")
-include(":WeatherLibrary")
+include(":WeatherUtils")

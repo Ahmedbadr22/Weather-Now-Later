@@ -1,4 +1,4 @@
-package com.ab.weatherlibrary
+package com.ab.weatherutils
 
 import org.junit.Test
 

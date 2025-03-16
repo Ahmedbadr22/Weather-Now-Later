@@ -25,6 +25,10 @@ interface CityDao {
     @Query("SELECT * FROM $CITY_TABLE_NAME WHERE name LIKE '%' || :name || '%'")
     suspend fun getCityWeatherForecastByName(name: String): CityWithWeatherForecastDetailsEntityRel?
 
+    @Transaction
+    @Query("SELECT * FROM $CITY_TABLE_NAME ORDER BY lastSearchDate DESC LIMIT 1")
+    suspend fun getLastSearchedCity(): CityWithWeatherForecastDetailsEntityRel?
+
     @Query("SELECT * FROM $CITY_TABLE_NAME WHERE id = :id")
     suspend fun getById(id: Long): CityEntity?
 

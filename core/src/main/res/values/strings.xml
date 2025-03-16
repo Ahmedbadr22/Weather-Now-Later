@@ -13,7 +13,7 @@
         Server error. Please try again later or contact support if the issue persists.\nDetail: %s
     </string>
     <string name="unknown_host_error">
-        We couldn’t connect to the server.\nDetails: %s
+        No internet connection or server error, please check internet and try again later.\nDetails: %s
     </string>
     <string name="io_error_message_with_details">
         We couldn’t complete your request due to an IO issue.\nDetails: %s

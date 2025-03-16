@@ -1,5 +1,6 @@
 package com.ab.core.utils.error
 
+import android.util.Log
 import com.ab.core.R
 import com.ab.core.utils.ext.ifNull
 import com.ab.core.utils.ext.orNA
@@ -16,6 +17,7 @@ class ExceptionHandler(
     private val resourceProvider: ResourceProvider,
 ) {
     fun handleAsFailure(throwable: Throwable): Failure {
+        Log.i("AHMED_ERROR", "handleAsFailure: $throwable")
         // Propagate coroutine cancellations immediately.
         // this rethrow happen to cancel any collecting happen on the flow
         if (throwable is CancellationException) throw throwable

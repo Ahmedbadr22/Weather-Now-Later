@@ -26,18 +26,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.ab.core.ui.theme.WeatherNowLaterTheme
 import com.ab.domain.model.model.TodayWeatherForecast
-import com.ab.weatherutils.WeatherFormatter
+import com.ab.weatherutils.TemperatureGauge
 import com.ab.weatherutils.WeatherIcons
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -52,8 +50,15 @@ fun TodayCityWeatherScreen(
     onCityNameChange: (String) -> Unit,
     onGetWeatherForecast: () -> Unit
 ) {
-    val context = LocalContext.current
-    val cameraPosition = rememberCameraPositionState()
+    val cameraPosition = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(
+            LatLng(
+                todayWeatherForecast?.latitude ?: 0.0,
+                todayWeatherForecast?.longitude ?: 0.0
+            ),
+            5f
+        )
+    }
 
     LaunchedEffect(todayWeatherForecast) {
         if (todayWeatherForecast != null) {
@@ -95,7 +100,7 @@ fun TodayCityWeatherScreen(
                 ) {
                     Icon(
                         Icons.Default.Search,
-                        contentDescription = "Search"
+                        contentDescription = stringResource(R.string.search)
                     )
                 }
             }
@@ -146,10 +151,10 @@ fun TodayCityWeatherScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         TemperatureGauge(
-                            currentTemp = todayWeatherForecast.weatherForecast.temperature.nightTemp.toInt(),
-                            minTemp = todayWeatherForecast.weatherForecast.temperature.minTemp.toInt(),
-                            maxTemp = todayWeatherForecast.weatherForecast.temperature.maxTemp.toInt(),
-                            windSpeed = WeatherFormatter.formatWindSpeed(todayWeatherForecast.weatherForecast.windSpeed)
+                            currentTemp = todayWeatherForecast.weatherForecast.temperature.nightTemp,
+                            minTemp = todayWeatherForecast.weatherForecast.temperature.minTemp,
+                            maxTemp = todayWeatherForecast.weatherForecast.temperature.maxTemp,
+                            windSpeed = todayWeatherForecast.weatherForecast.windSpeed
                         )
                     }
 

@@ -19,19 +19,26 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TemperatureGauge(
-    currentTemp: Int = 26,
-    minTemp: Int = 9,
-    maxTemp: Int = 32,
-    windSpeed: String = "20 mph"
+    currentTemp: Double,
+    minTemp: Double,
+    maxTemp: Double,
+    windSpeed: Double,
+    indicatorColor: Color = MaterialTheme.colorScheme.onBackground,
+    textColor: Color = MaterialTheme.colorScheme.onBackground
 ) {
-    val sweepAngle = 240f // Arc span (starting from -120° to +120°)
-    val startAngle = 150f // Start from left
-    val indicatorAngle = startAngle + ((currentTemp - minTemp).toFloat() / (maxTemp - minTemp) * sweepAngle)
+    val sweepAngle = 240f
+    val startAngle = 150f
+    val indicatorAngle =
+        startAngle + ((currentTemp - minTemp).toFloat() / (maxTemp - minTemp) * sweepAngle)
 
-    val onBackgroundColor = MaterialTheme.colorScheme.onBackground
-
-    Box(modifier = Modifier.size(140.dp)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .size(140.dp)
+    ) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
             val strokeWidth = 8.dp.toPx()
             // Draw Background Arc
             drawArc(
@@ -44,9 +51,9 @@ fun TemperatureGauge(
 
             // Draw Filled Arc (Progress)
             drawArc(
-                color = onBackgroundColor,
+                color = indicatorColor,
                 startAngle = startAngle,
-                sweepAngle = (indicatorAngle - startAngle),
+                sweepAngle = (indicatorAngle - startAngle).toFloat(),
                 useCenter = false,
                 style = Stroke(strokeWidth, cap = StrokeCap.Round)
             )
@@ -55,7 +62,7 @@ fun TemperatureGauge(
 
         // Temperature Text
         Text(
-            text = "$currentTemp°",
+            text = WeatherFormatter.formatTemperature(currentTemp),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.Center)
@@ -63,26 +70,32 @@ fun TemperatureGauge(
 
         // Wind Speed Text
         Text(
-            text = windSpeed,
+            text = WeatherFormatter.formatWindSpeed(windSpeed),
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
-            modifier = Modifier.align(Alignment.Center).offset(y = 30.dp)
+            color = textColor.copy(alpha = 0.8f),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .offset(y = 30.dp)
         )
 
         // Min Temp Text
         Text(
-            text = "$minTemp°",
+            text = WeatherFormatter.formatTemperature(minTemp),
             fontSize = 12.sp,
             color = Color.Gray,
-            modifier = Modifier.align(Alignment.BottomStart).offset(x = 16.dp)
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .offset(x = 16.dp)
         )
 
         // Max Temp Text
         Text(
-            text = "$maxTemp°",
+            text = WeatherFormatter.formatTemperature(maxTemp),
             fontSize = 12.sp,
             color = Color.Gray,
-            modifier = Modifier.align(Alignment.BottomEnd).offset(x = (-16).dp)
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .offset(x = (-16).dp)
         )
     }
 }

@@ -1,7 +1,7 @@
 package com.ab.domain.model.model
 
 data class WeatherForecast(
-    val id: Long,
+    val id: Long = 0,
     val dateTimestamp: Long,
     val sunrise: Long,
     val sunset: Long,

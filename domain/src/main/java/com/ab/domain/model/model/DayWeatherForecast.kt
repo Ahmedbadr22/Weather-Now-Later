@@ -1,6 +1,6 @@
 package com.ab.domain.model.model
 
-data class TodayWeatherForecast(
+data class DayWeatherForecast(
     val id: Long,
     val name: String,
     val country: String,

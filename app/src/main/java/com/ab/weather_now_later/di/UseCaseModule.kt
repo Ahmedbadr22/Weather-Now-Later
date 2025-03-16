@@ -3,8 +3,9 @@ package com.ab.weather_now_later.di
 import com.ab.core.utils.error.ExceptionHandler
 import com.ab.core.utils.resource.ResourceProvider
 import com.ab.domain.repository.WeatherForecastRepository
-import com.ab.domain.usecases.FetchWeatherForecastByCityNameUseCase
-import com.ab.domain.usecases.GetTodayWeatherForecastByCityUseCase
+import com.ab.domain.usecases.GetLastCityOrFetchFromRemoteUseCase
+import com.ab.domain.usecases.GetLastSearchedCityUseCase
+import com.ab.domain.usecases.InsertWeatherForecastResponseToLocalUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,20 +18,36 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideFetchWeatherForecastByCityUseCase(
+    fun provideGetLastSearchedCityUseCase(
         repository: WeatherForecastRepository,
-        exceptionHandler: ExceptionHandler
-    ): FetchWeatherForecastByCityNameUseCase {
-        return FetchWeatherForecastByCityNameUseCase(repository, exceptionHandler)
+        resourceProvider: ResourceProvider
+    ): GetLastSearchedCityUseCase {
+        return GetLastSearchedCityUseCase(repository, resourceProvider)
     }
 
     @Provides
     @ViewModelScoped
-    fun provideGetTodayWeatherForecastByCityUseCase(
+    fun provideInsertWeatherForecastResponseToLocalUseCase(
         repository: WeatherForecastRepository,
+    ): InsertWeatherForecastResponseToLocalUseCase {
+        return InsertWeatherForecastResponseToLocalUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetLastCityOrFetchFromRemoteUseCase(
+        repository: WeatherForecastRepository,
+        insertWeatherForecastResponseToLocalUseCase: InsertWeatherForecastResponseToLocalUseCase,
+        getLastSearchedCityUseCase: GetLastSearchedCityUseCase,
         exceptionHandler: ExceptionHandler,
         resourceProvider: ResourceProvider
-    ): GetTodayWeatherForecastByCityUseCase {
-        return GetTodayWeatherForecastByCityUseCase(repository, resourceProvider, exceptionHandler)
+    ): GetLastCityOrFetchFromRemoteUseCase {
+        return GetLastCityOrFetchFromRemoteUseCase(
+            repository,
+            getLastSearchedCityUseCase,
+            insertWeatherForecastResponseToLocalUseCase,
+            exceptionHandler,
+            resourceProvider
+        )
     }
 }

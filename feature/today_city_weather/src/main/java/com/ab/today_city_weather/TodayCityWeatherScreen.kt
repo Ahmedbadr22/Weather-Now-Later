@@ -1,6 +1,7 @@
 package com.ab.today_city_weather
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -26,12 +28,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ab.core.ui.theme.WeatherNowLaterTheme
-import com.ab.domain.model.model.TodayWeatherForecast
+import com.ab.domain.model.model.DayWeatherForecast
 import com.ab.weatherutils.TemperatureGauge
 import com.ab.weatherutils.WeatherIcons
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -42,31 +45,45 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun TodayCityWeatherScreen(
+    loading: Boolean,
+    message: String?,
+    errors: Flow<String>,
     cityName: String,
-    todayWeatherForecast: TodayWeatherForecast?,
+    dayWeatherForecast: DayWeatherForecast?,
     onCityNameChange: (String) -> Unit,
     onGetWeatherForecast: () -> Unit
 ) {
+    val context = LocalContext.current
+
+    LaunchedEffect(errors) {
+        errors.collectLatest { error ->
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     val cameraPosition = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             LatLng(
-                todayWeatherForecast?.latitude ?: 0.0,
-                todayWeatherForecast?.longitude ?: 0.0
+                dayWeatherForecast?.latitude ?: 0.0,
+                dayWeatherForecast?.longitude ?: 0.0
             ),
             5f
         )
     }
 
-    LaunchedEffect(todayWeatherForecast) {
-        if (todayWeatherForecast != null) {
+    LaunchedEffect(dayWeatherForecast) {
+        if (dayWeatherForecast != null) {
             cameraPosition.animate(
                 CameraUpdateFactory.newLatLng(
                     LatLng(
-                        todayWeatherForecast.latitude,
-                        todayWeatherForecast.longitude
+                        dayWeatherForecast.latitude,
+                        dayWeatherForecast.longitude
                     )
                 ),
                 700
@@ -95,16 +112,20 @@ fun TodayCityWeatherScreen(
                     value = cityName,
                     onValueChange = onCityNameChange
                 )
-                OutlinedIconButton(
-                    onClick = onGetWeatherForecast
-                ) {
-                    Icon(
-                        Icons.Default.Search,
-                        contentDescription = stringResource(R.string.search)
-                    )
+                if (loading) {
+                    CircularProgressIndicator()
+                } else {
+                    OutlinedIconButton(
+                        onClick = onGetWeatherForecast
+                    ) {
+                        Icon(
+                            Icons.Default.Search,
+                            contentDescription = stringResource(R.string.search)
+                        )
+                    }
                 }
             }
-            if (todayWeatherForecast != null) {
+            if (dayWeatherForecast != null) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -113,11 +134,11 @@ fun TodayCityWeatherScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = todayWeatherForecast.name,
+                        text = dayWeatherForecast.name,
                         style = MaterialTheme.typography.displayLarge
                     )
                     Text(
-                        text = todayWeatherForecast.country,
+                        text = dayWeatherForecast.country,
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
@@ -138,7 +159,7 @@ fun TodayCityWeatherScreen(
                                 .size(100.dp),
                             painter = painterResource(
                                 WeatherIcons.getWeatherIconRes(
-                                    todayWeatherForecast.weatherForecast.weatherCondition.main
+                                    dayWeatherForecast.weatherForecast.weatherCondition.main
                                 )
                             ),
                             contentDescription = null
@@ -151,10 +172,10 @@ fun TodayCityWeatherScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         TemperatureGauge(
-                            currentTemp = todayWeatherForecast.weatherForecast.temperature.nightTemp,
-                            minTemp = todayWeatherForecast.weatherForecast.temperature.minTemp,
-                            maxTemp = todayWeatherForecast.weatherForecast.temperature.maxTemp,
-                            windSpeed = todayWeatherForecast.weatherForecast.windSpeed
+                            currentTemp = dayWeatherForecast.weatherForecast.temperature.nightTemp,
+                            minTemp = dayWeatherForecast.weatherForecast.temperature.minTemp,
+                            maxTemp = dayWeatherForecast.weatherForecast.temperature.maxTemp,
+                            windSpeed = dayWeatherForecast.weatherForecast.windSpeed
                         )
                     }
 
@@ -165,11 +186,11 @@ fun TodayCityWeatherScreen(
                         .padding(horizontal = 16.dp),
                 ) {
                     Text(
-                        text = todayWeatherForecast.weatherForecast.weatherCondition.main,
+                        text = dayWeatherForecast.weatherForecast.weatherCondition.main,
                         style = MaterialTheme.typography.displayLarge
                     )
                     Text(
-                        text = todayWeatherForecast.weatherForecast.weatherCondition.description,
+                        text = dayWeatherForecast.weatherForecast.weatherCondition.description,
                         style = MaterialTheme.typography.displaySmall
                     )
                 }
@@ -192,13 +213,25 @@ fun TodayCityWeatherScreen(
                     Marker(
                         state = MarkerState(
                             position = LatLng(
-                                todayWeatherForecast.latitude,
-                                todayWeatherForecast.longitude
+                                dayWeatherForecast.latitude,
+                                dayWeatherForecast.longitude
                             )
                         ),
-                        title = todayWeatherForecast.name,
-                        snippet = "Capital of ${todayWeatherForecast.country}"
+                        title = dayWeatherForecast.name,
+                        snippet = "Capital of ${dayWeatherForecast.country}"
                     )
+                }
+            } else {
+                if (message != null) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = message,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
                 }
             }
         }
@@ -210,10 +243,13 @@ fun TodayCityWeatherScreen(
 private fun TodayCityWeatherScreenDayPreview() {
     WeatherNowLaterTheme {
         TodayCityWeatherScreen(
+            loading = false,
+            message = "Message",
+            errors = emptyFlow(),
             cityName = "",
             onCityNameChange = {},
             onGetWeatherForecast = {},
-            todayWeatherForecast = null
+            dayWeatherForecast = null
         )
     }
 }
@@ -223,10 +259,13 @@ private fun TodayCityWeatherScreenDayPreview() {
 private fun TodayCityWeatherScreenNightPreview() {
     WeatherNowLaterTheme {
         TodayCityWeatherScreen(
+            loading = false,
+            errors = emptyFlow(),
             cityName = "",
+            message = "",
             onCityNameChange = {},
             onGetWeatherForecast = {},
-            todayWeatherForecast = null
+            dayWeatherForecast = null
         )
     }
 }

@@ -54,7 +54,7 @@
         لم يتم العثور على توقعات الطقس اليوم.
     </string>
 
-    <string name="this_field_cant_be_empty">">
+    <string name="this_field_cant_be_empty">
         لا يمكن ان يكون هذا الحقل فارغ
     </string>
 </resources>

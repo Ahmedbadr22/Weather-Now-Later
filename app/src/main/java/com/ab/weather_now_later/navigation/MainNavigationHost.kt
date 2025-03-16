@@ -51,12 +51,17 @@ fun MainNavigationHost(
 
             val cityName: String by viewModel.cityName.collectAsStateWithLifecycle()
             val todayWeatherForecast by viewModel.weatherForecast.collectAsStateWithLifecycle()
+            val loading by viewModel.isLoading.collectAsStateWithLifecycle()
+            val message by viewModel.message.collectAsStateWithLifecycle()
 
             TodayCityWeatherScreen(
+                loading = loading,
+                message = message,
+                errors = viewModel.errorFlow,
                 cityName = cityName,
                 onCityNameChange = viewModel::onCityNameChange,
                 onGetWeatherForecast = viewModel::onClickGetWeatherForecast,
-                todayWeatherForecast = todayWeatherForecast
+                dayWeatherForecast = todayWeatherForecast
             )
         }
     }

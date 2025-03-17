@@ -12,7 +12,9 @@ import com.ab.domain.model.entity.CityEntity
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -104,5 +106,79 @@ class CityLocalDataSourceImplTest {
         val insertedCitiesAfterDelete = cityLocalDataSource.getAll()
 
         assertEquals(0, insertedCitiesAfterDelete.size)
+    }
+
+    @Test
+    fun getAllWithRelations_insertOneCity_returnTheSizeCorrectly() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+
+        val cityEntities = cityLocalDataSource.getAllWithRelations()
+
+        assertEquals(1, cityEntities.size)
+    }
+
+    @Test
+    fun getAllWithRelations_noInsertedCity_returnEmpty() = runTest {
+        val cityEntities = cityLocalDataSource.getAllWithRelations()
+
+        assertTrue(cityEntities.isEmpty())
+    }
+
+    @Test
+    fun getCityWeatherForecastByName_searchWithValidName_returnCity() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+        val cityEntity = cityLocalDataSource.getCityWeatherForecastByName(dummyCityEntity.name)
+
+        assertNotNull(cityEntity)
+        assertEquals(dummyCityEntity.id, cityEntity?.city?.id)
+        assertEquals(dummyCityEntity.name, cityEntity?.city?.name)
+    }
+
+    @Test
+    fun getCityWeatherForecastByName_searchWithInValidName_returnNull() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+        val cityEntity = cityLocalDataSource.getCityWeatherForecastByName("Ahm")
+
+        assertNull(cityEntity)
+    }
+
+    @Test
+    fun getCityWeatherForecastById_searchWithValidId_returnCity() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+        val cityEntity = cityLocalDataSource.getCityWeatherForecastById(dummyCityEntity.id)
+
+        assertNotNull(cityEntity)
+        assertEquals(dummyCityEntity.id, cityEntity?.city?.id)
+        assertEquals(dummyCityEntity.name, cityEntity?.city?.name)
+    }
+
+    @Test
+    fun getCityWeatherForecastById_searchWithInValidId_returnNull() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+        val cityEntity = cityLocalDataSource.getCityWeatherForecastById(100)
+
+        assertNull(cityEntity)
+    }
+
+    @Test
+    fun getLastSearchedCity_insertOneCity_returnTheLastInsertedCityCorrectly() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+        val cityEntity = cityLocalDataSource.getLastSearchedCity()
+
+        assertNotNull(cityEntity)
+        assertEquals(dummyCityEntity.id, cityEntity?.city?.id)
+        assertEquals(dummyCityEntity.name, cityEntity?.city?.name)
+    }
+
+    @Test
+    fun getLastSearchedCity_insertTwoCity_returnTheLastInsertedCityCorrectly() = runTest {
+        cityLocalDataSource.insert(dummyCityEntity)
+        cityLocalDataSource.insert(dummyCityEntity.copy(id = 2, name = "Alex"))
+
+        val cityEntity = cityLocalDataSource.getLastSearchedCity()
+
+        assertNotNull(cityEntity)
+        assertEquals(2, cityEntity?.city?.id)
+        assertEquals("Alex", cityEntity?.city?.name)
     }
 }

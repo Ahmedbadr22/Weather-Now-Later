@@ -40,9 +40,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build WeatherUtils Lib AAR
-        run: ./gradlew :WeatherUtils:assembleRelease
-
       - name: Run Android Lint
         run: ./gradlew lintDebug
 

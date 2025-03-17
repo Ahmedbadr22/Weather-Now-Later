@@ -67,5 +67,6 @@ dependencies {
     implementation(libs.play.services.maps)
 
     // my android weather lib
-    implementation(libs.weatherutils)
+    //implementation(libs.weatherutils)
+    implementation(project(":WeatherUtils"))
 }

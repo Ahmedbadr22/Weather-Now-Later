@@ -16,7 +16,7 @@ import com.ab.core.utils.constants.DB.WEATHER_FORECAST_TABLE_NAME
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["forecastId"])]
+    indices = [Index(value = ["cityId"])]
 )
 data class WeatherForecastEntity(
     @PrimaryKey(autoGenerate = true)

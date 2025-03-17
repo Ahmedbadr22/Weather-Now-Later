@@ -49,6 +49,10 @@ class WeatherForecastRepositoryImpl @Inject constructor(
         return cityLocalDataSource.getCityWeatherForecastByName(name)
     }
 
+    override suspend fun getCityWeatherForecastById(id: Long): CityWithWeatherForecastDetailsEntityRel? {
+        return cityLocalDataSource.getCityWeatherForecastById(id)
+    }
+
     override suspend fun getLastSearchedCity(): CityWithWeatherForecastDetailsEntityRel? {
         return cityLocalDataSource.getLastSearchedCity()
     }

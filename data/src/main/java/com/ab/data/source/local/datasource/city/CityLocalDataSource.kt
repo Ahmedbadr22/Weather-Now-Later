@@ -10,6 +10,7 @@ interface CityLocalDataSource {
 
     suspend fun getAllWithRelations(): List<CityWithWeatherForecastDetailsEntityRel>
     suspend fun getCityWeatherForecastByName(name: String): CityWithWeatherForecastDetailsEntityRel?
+    suspend fun getCityWeatherForecastById(id: Long): CityWithWeatherForecastDetailsEntityRel?
     suspend fun getLastSearchedCity(): CityWithWeatherForecastDetailsEntityRel?
 
     suspend fun getById(id: Long): CityEntity?

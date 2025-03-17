@@ -35,6 +35,12 @@ class CityLocalDataSourceImpl @Inject constructor (
         }
     }
 
+    override suspend fun getCityWeatherForecastById(id: Long): CityWithWeatherForecastDetailsEntityRel? {
+        return withContext(Dispatchers.IO) {
+            cityDao.getCityWeatherForecastById(id)
+        }
+    }
+
     override suspend fun getLastSearchedCity(): CityWithWeatherForecastDetailsEntityRel? {
         return withContext(Dispatchers.IO) {
             cityDao.getLastSearchedCity()

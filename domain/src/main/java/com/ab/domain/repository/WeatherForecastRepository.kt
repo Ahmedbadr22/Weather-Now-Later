@@ -16,5 +16,6 @@ interface WeatherForecastRepository {
     suspend fun insertTemperatureToLocal(entity: TemperatureEntity): Long
 
     suspend fun getCityWeatherForecastByName(name: String): CityWithWeatherForecastDetailsEntityRel?
+    suspend fun getCityWeatherForecastById(id: Long): CityWithWeatherForecastDetailsEntityRel?
     suspend fun getLastSearchedCity(): CityWithWeatherForecastDetailsEntityRel?
 }

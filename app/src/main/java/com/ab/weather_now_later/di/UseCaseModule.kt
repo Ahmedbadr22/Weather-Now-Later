@@ -5,6 +5,7 @@ import com.ab.core.utils.resource.ResourceProvider
 import com.ab.domain.repository.WeatherForecastRepository
 import com.ab.domain.usecases.GetLastCityOrFetchFromRemoteUseCase
 import com.ab.domain.usecases.GetLastSearchedCityUseCase
+import com.ab.domain.usecases.GetWeekCityWeatherForecastByIdUseCase
 import com.ab.domain.usecases.InsertWeatherForecastResponseToLocalUseCase
 import dagger.Module
 import dagger.Provides
@@ -31,6 +32,20 @@ object UseCaseModule {
         repository: WeatherForecastRepository,
     ): InsertWeatherForecastResponseToLocalUseCase {
         return InsertWeatherForecastResponseToLocalUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetWeekCityWeatherForecastByIdUseCase(
+        repository: WeatherForecastRepository,
+        exceptionHandler: ExceptionHandler,
+        resourceProvider: ResourceProvider
+    ): GetWeekCityWeatherForecastByIdUseCase {
+        return GetWeekCityWeatherForecastByIdUseCase(
+            repository,
+            exceptionHandler,
+            resourceProvider
+        )
     }
 
     @Provides

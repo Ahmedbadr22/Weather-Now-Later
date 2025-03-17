@@ -26,6 +26,10 @@ interface CityDao {
     suspend fun getCityWeatherForecastByName(name: String): CityWithWeatherForecastDetailsEntityRel?
 
     @Transaction
+    @Query("SELECT * FROM $CITY_TABLE_NAME WHERE id = :id")
+    suspend fun getCityWeatherForecastById(id: Long): CityWithWeatherForecastDetailsEntityRel?
+
+    @Transaction
     @Query("SELECT * FROM $CITY_TABLE_NAME ORDER BY lastSearchDate DESC LIMIT 1")
     suspend fun getLastSearchedCity(): CityWithWeatherForecastDetailsEntityRel?
 

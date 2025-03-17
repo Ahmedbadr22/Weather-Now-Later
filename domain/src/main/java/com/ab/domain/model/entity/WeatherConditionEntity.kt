@@ -2,6 +2,7 @@ package com.ab.domain.model.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.ab.core.utils.constants.DB.WEATHER_CONDITION_TABLE_NAME
 
@@ -14,7 +15,8 @@ import com.ab.core.utils.constants.DB.WEATHER_CONDITION_TABLE_NAME
             childColumns = ["forecastId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["forecastId"])]
 )
 data class WeatherConditionEntity(
     @PrimaryKey(autoGenerate = true)

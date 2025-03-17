@@ -1,6 +1,5 @@
 package com.ab.city_week_forecast
 
-import android.widget.Space
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
@@ -31,18 +34,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ab.core.ui.theme.WeatherNowLaterTheme
 import com.ab.weatherutils.R
-import com.ab.weatherutils.TemperatureGauge
 import com.ab.weatherutils.WeatherFormatter
 import com.ab.weatherutils.WeatherIcons
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.emptyFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CityWeekForecastScreen(
     uiState: CityWeekForecastContract.State,
-    sideEffects: Flow<CityWeekForecastContract.Effect>
+    sideEffects: Flow<CityWeekForecastContract.Effect>,
+    navigateBack: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -64,6 +66,16 @@ fun CityWeekForecastScreen(
                         text = uiState.cityName,
                         style = MaterialTheme.typography.displaySmall
                     )
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = navigateBack
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Outlined.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
                 }
             )
         }
@@ -156,7 +168,8 @@ private fun CityWeekForecastScreenDayPreview() {
                 cityName = "Cairo",
                 weekForecasts = emptyList()
             ),
-            sideEffects = emptyFlow()
+            sideEffects = emptyFlow(),
+            navigateBack = {}
         )
     }
 }
@@ -171,7 +184,8 @@ private fun CityWeekForecastScreenNightPreview() {
                 cityName = "Cairo",
                 weekForecasts = emptyList()
             ),
-            sideEffects = emptyFlow()
+            sideEffects = emptyFlow(),
+            navigateBack = {}
         )
     }
 }

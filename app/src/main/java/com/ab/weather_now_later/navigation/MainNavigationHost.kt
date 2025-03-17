@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -78,7 +79,10 @@ fun MainNavigationHost(
 
             CityWeekForecastScreen(
                 uiState = uiState,
-                sideEffects = viewModel.sideEffects
+                sideEffects = viewModel.sideEffects,
+                navigateBack = dropUnlessResumed {
+                    navHostController.popBackStack()
+                }
             )
         }
     }

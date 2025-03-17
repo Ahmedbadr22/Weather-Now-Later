@@ -65,10 +65,9 @@ jobs:
       - name: Accept Licenses
         run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses
 
-      # ✅ Create emulator
-      - name: Create AVD
+      - name: Create AVD non-interactively
         run: |
-          ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-31;google_apis;x86_64" --force
+          echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-31;google_apis;x86_64" --force
 
       # ✅ Start emulator
       - name: Start Emulator

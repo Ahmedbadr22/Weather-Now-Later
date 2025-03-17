@@ -57,7 +57,8 @@ fun TodayCityWeatherScreen(
     cityName: String,
     dayWeatherForecast: DayWeatherForecast?,
     onCityNameChange: (String) -> Unit,
-    onGetWeatherForecast: () -> Unit
+    onGetWeatherForecast: () -> Unit,
+    onNavigateToWeekForecast: (Long) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -199,7 +200,9 @@ fun TodayCityWeatherScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    onClick = {},
+                    onClick = {
+                        onNavigateToWeekForecast(dayWeatherForecast.id)
+                    },
                     shape = RoundedCornerShape(5),
                 ) {
                     Text(stringResource(R.string.show_7_day_forecast))
@@ -249,7 +252,8 @@ private fun TodayCityWeatherScreenDayPreview() {
             cityName = "",
             onCityNameChange = {},
             onGetWeatherForecast = {},
-            dayWeatherForecast = null
+            dayWeatherForecast = null,
+            onNavigateToWeekForecast = {}
         )
     }
 }
@@ -265,7 +269,8 @@ private fun TodayCityWeatherScreenNightPreview() {
             message = "",
             onCityNameChange = {},
             onGetWeatherForecast = {},
-            dayWeatherForecast = null
+            dayWeatherForecast = null,
+            onNavigateToWeekForecast = {}
         )
     }
 }

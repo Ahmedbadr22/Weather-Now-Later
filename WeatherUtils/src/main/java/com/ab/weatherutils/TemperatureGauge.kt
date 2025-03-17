@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TemperatureGauge(
+    modifier: Modifier = Modifier,
     currentTemp: Double,
     minTemp: Double,
     maxTemp: Double,
@@ -32,7 +33,7 @@ fun TemperatureGauge(
         startAngle + ((currentTemp - minTemp).toFloat() / (maxTemp - minTemp) * sweepAngle)
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(140.dp)
     ) {
         Canvas(

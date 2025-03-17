@@ -9,6 +9,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ab.city_week_forecast.CityWeekForecastScreen
+import com.ab.city_week_forecast.CityWeekForecastScreenRoute
+import com.ab.city_week_forecast.CityWeekForecastViewModel
 import com.ab.core.utils.constants.AppConst.NAV_TRANSITION_DURATION
 import com.ab.today_city_weather.TodayCityWeatherScreen
 import com.ab.today_city_weather.TodayCityWeatherViewModel
@@ -61,7 +64,21 @@ fun MainNavigationHost(
                 cityName = cityName,
                 onCityNameChange = viewModel::onCityNameChange,
                 onGetWeatherForecast = viewModel::onClickGetWeatherForecast,
-                dayWeatherForecast = todayWeatherForecast
+                dayWeatherForecast = todayWeatherForecast,
+                onNavigateToWeekForecast = { cityId ->
+                    navHostController.navigate(CityWeekForecastScreenRoute(cityId))
+                }
+            )
+        }
+
+        composable<CityWeekForecastScreenRoute> {
+            val viewModel: CityWeekForecastViewModel = hiltViewModel()
+
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            CityWeekForecastScreen(
+                uiState = uiState,
+                sideEffects = viewModel.sideEffects
             )
         }
     }

@@ -51,16 +51,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-report
-          path: '**/build/test-results/testDebugUnitTest/*.xml'
+          path: '**/build/reports/tests/testDebugUnitTest/**'
           reporter: java-junit
 
-      - name: Unit Test Reporter
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Unit Tests Results
-          path: '**/build/test-results/testDebugUnitTest/*.xml'
-          reporter: java-junit
 
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug

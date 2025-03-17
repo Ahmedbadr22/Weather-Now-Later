@@ -27,6 +27,7 @@ jobs:
 
       - name: Print Java Version
         run: javac -version
+
       - name: Change Wrapper Permissions
         run: chmod +x ./gradlew
 
@@ -52,8 +53,40 @@ jobs:
         with:
           name: unit-test-report
           path: '**/build/reports/tests/testDebugUnitTest/**'
-          reporter: java-junit
 
+      # 🟢 Install Emulator & System Image
+      - name: Install Android Emulator & System Image
+        run: |
+          echo "y" | sdkmanager "system-images;android-31;google_apis;x86_64"
+          sdkmanager --install "emulator"
+
+      # 🟢 Create AVD
+      - name: Create AVD
+        run: |
+          echo "no" | avdmanager create avd -n test -k "system-images;android-31;google_apis;x86_64" --force
+
+      # 🟢 Start Emulator
+      - name: Start Emulator
+        run: |
+          $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-boot-anim -accel off &
+          adb wait-for-device
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+          adb shell settings put global animator_duration_scale 0
+          adb shell input keyevent 82 &
+          adb devices
+
+      # 🟢 Run Instrumentation Tests
+      - name: Run Android Instrumentation Tests
+        run: ./gradlew connectedDebugAndroidTest
+
+      # 🟢 Upload Instrumentation Test Report
+      - name: Upload Android Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-instrumentation-report
+          path: '**/build/reports/androidTests/connected/**'
 
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug

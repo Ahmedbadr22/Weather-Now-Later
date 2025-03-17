@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f3bdabf8c755a549a94333c10d91aff6",
+    "identityHash": "1b621cb99e1194af4900806133106de4",
     "entities": [
       {
         "tableName": "city",
@@ -131,7 +131,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_weather_forecast_cityId",
+            "unique": false,
+            "columnNames": [
+              "cityId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weather_forecast_cityId` ON `${TABLE_NAME}` (`cityId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "city",
@@ -205,7 +215,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_temperature_forecastId",
+            "unique": false,
+            "columnNames": [
+              "forecastId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_temperature_forecastId` ON `${TABLE_NAME}` (`forecastId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "weather_forecast",
@@ -267,7 +287,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_weather_condition_forecastId",
+            "unique": false,
+            "columnNames": [
+              "forecastId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weather_condition_forecastId` ON `${TABLE_NAME}` (`forecastId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "weather_forecast",
@@ -286,7 +316,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f3bdabf8c755a549a94333c10d91aff6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1b621cb99e1194af4900806133106de4')"
     ]
   }
 }

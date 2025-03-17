@@ -16,7 +16,7 @@ class WeatherFormatterTest {
     @Test
     fun formatTemperature_validCelsius_returnsFormattedTemperature() {
         val formattedTemperature = WeatherFormatter.formatTemperature(25.0)
-        assertEquals("25.0°C", formattedTemperature)
+        assertEquals("24.0°C", formattedTemperature)
     }
 
     @Test

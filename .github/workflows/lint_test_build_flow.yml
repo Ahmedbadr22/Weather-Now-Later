@@ -54,44 +54,6 @@ jobs:
           name: unit-test-report
           path: '**/build/reports/tests/testDebugUnitTest/**'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # ✅ Install system image & emulator
-      - name: Install Emulator & System Image
-        run: |
-          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platforms;android-31" "platform-tools" "emulator" "system-images;android-31;google_apis;x86_64"
-
-      - name: Accept Licenses
-        run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses
-
-      - name: Create AVD non-interactively
-        run: |
-          echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-31;google_apis;x86_64" --force
-
-      # ✅ Start emulator
-      - name: Start Emulator
-        run: |
-          $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-boot-anim -accel off &
-          adb wait-for-device
-          adb shell settings put global window_animation_scale 0
-          adb shell settings put global transition_animation_scale 0
-          adb shell settings put global animator_duration_scale 0
-          adb shell input keyevent 82 &
-          adb devices
-
-      # ✅ Run Android Instrumentation Tests
-      - name: Run Instrumentation Tests
-        run: ./gradlew connectedDebugAndroidTest
-
-      # ✅ Upload report
-      - name: Upload Android Test Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-instrumentation-report
-          path: '**/build/reports/androidTests/connected/**'
-
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
 

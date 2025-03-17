@@ -14,6 +14,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -21,3 +22,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "Weather Now & Later"
 include(":app")
+include(":core")
+include(":data")
+include(":domain")
+include(":feature:today_city_weather")
+include(":WeatherUtils")
+include(":feature:city_week_forecast")

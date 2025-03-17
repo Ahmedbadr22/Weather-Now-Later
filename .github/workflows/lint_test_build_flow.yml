@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - master
-      - development/ci-cd/init
   pull_request:
     branches:
       - master
-      - development/ci-cd/init
     tags:
       - 'v*'
 

@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - master
+      - development/ci-cd/init
     tags:
       - 'v*'
 

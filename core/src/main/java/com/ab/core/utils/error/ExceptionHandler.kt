@@ -4,7 +4,7 @@ import android.util.Log
 import com.ab.core.R
 import com.ab.core.utils.ext.ifNull
 import com.ab.core.utils.ext.orNA
-import com.ab.core.utils.resource.ResourceProvider
+import com.ab.core.utils.resource.ResourceProviderImpl
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
@@ -14,7 +14,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 class ExceptionHandler(
     private val gson: Gson,
-    private val resourceProvider: ResourceProvider,
+    private val resourceProviderImpl: ResourceProviderImpl,
 ) {
     fun handleAsFailure(throwable: Throwable): Failure {
         Log.i("AHMED_ERROR", "handleAsFailure: $throwable")
@@ -36,7 +36,7 @@ class ExceptionHandler(
 
                 when (statusCode) {
                     400 -> Failure.BadRequest(
-                        resourceProvider.getString(
+                        resourceProviderImpl.getString(
                             R.string.bad_request_message,
                             "(${errorMessage.ifNull { statusCode.toString() }})"
                         ),
@@ -44,7 +44,7 @@ class ExceptionHandler(
                     )
 
                     401 -> Failure.UnAuthorized(
-                        resourceProvider.getString(
+                        resourceProviderImpl.getString(
                             R.string.un_authorized_error,
                             "(${errorMessage.ifNull { statusCode.toString() }})"
                         ),
@@ -52,7 +52,7 @@ class ExceptionHandler(
                     )
 
                     404 -> Failure.NotFound(
-                        resourceProvider.getString(
+                        resourceProviderImpl.getString(
                             R.string.not_found_network_error_msg,
                             "(${errorMessage.ifNull { statusCode.toString() }})"
                         ),
@@ -60,7 +60,7 @@ class ExceptionHandler(
                     )
 
                     500, 501, 502 -> Failure.InternalServer(
-                        resourceProvider.getString(
+                        resourceProviderImpl.getString(
                             R.string.server_error,
                             "(${errorMessage.ifNull { statusCode.toString() }})"
                         ),
@@ -68,7 +68,7 @@ class ExceptionHandler(
                     )
 
                     else -> Failure.Unknown(
-                        resourceProvider.getString(
+                        resourceProviderImpl.getString(
                             R.string.unknown_error,
                             "(${errorMessage.ifNull { statusCode.toString() }})"
                         ),
@@ -77,7 +77,7 @@ class ExceptionHandler(
                 }
             }
             is UnknownHostException -> Failure.UnknownHost(
-                resourceProvider.getString(
+                resourceProviderImpl.getString(
                     R.string.unknown_host_error,
                     "(${throwableMsg.orNA()})"
                 ),
@@ -85,7 +85,7 @@ class ExceptionHandler(
             )
 
             is IOException -> Failure.IO(
-                resourceProvider.getString(
+                resourceProviderImpl.getString(
                     R.string.io_error_message_with_details,
                     "(${throwableMsg.orNA()})"
                 ),
@@ -93,7 +93,7 @@ class ExceptionHandler(
             )
 
             is TimeoutException -> Failure.Timeout(
-                resourceProvider.getString(
+                resourceProviderImpl.getString(
                     R.string.timeout_error,
                     "(${throwableMsg.orNA()})"
                 ),
@@ -101,7 +101,7 @@ class ExceptionHandler(
             )
 
             else -> Failure.Unknown(
-                resourceProvider.getString(
+                resourceProviderImpl.getString(
                     R.string.unknown_error,
                     "(${throwableMsg.orNA()})"
                 ),

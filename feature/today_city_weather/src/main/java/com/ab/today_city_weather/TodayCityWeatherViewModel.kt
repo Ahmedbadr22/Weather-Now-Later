@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ab.core.R
 import com.ab.core.utils.base.handle
 import com.ab.core.utils.error.Failure
-import com.ab.core.utils.resource.ResourceProvider
+import com.ab.core.utils.resource.ResourceProviderImpl
 import com.ab.domain.model.model.DayWeatherForecast
 import com.ab.domain.usecases.GetLastCityOrFetchFromRemoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TodayCityWeatherViewModel @Inject constructor(
-    private val resourceProvider: ResourceProvider,
+    private val resourceProviderImpl: ResourceProviderImpl,
     private val getLastCityOrFetchFromRemoteUseCase: GetLastCityOrFetchFromRemoteUseCase
 ): ViewModel() {
 
@@ -65,7 +65,7 @@ class TodayCityWeatherViewModel @Inject constructor(
         val cityName = _cityName.value
 
         if (cityName.isEmpty()) {
-            val failureMsg = resourceProvider.getString(R.string.this_field_cant_be_empty)
+            val failureMsg = resourceProviderImpl.getString(R.string.this_field_cant_be_empty)
             viewModelScope.launch { _errorChannel.send(failureMsg) }
             return
         }

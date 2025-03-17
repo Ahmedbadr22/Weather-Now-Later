@@ -1,7 +1,7 @@
 package com.ab.weather_now_later.di
 
 import com.ab.core.utils.error.ExceptionHandler
-import com.ab.core.utils.resource.ResourceProvider
+import com.ab.core.utils.resource.ResourceProviderImpl
 import com.ab.domain.repository.WeatherForecastRepository
 import com.ab.domain.usecases.GetLastCityOrFetchFromRemoteUseCase
 import com.ab.domain.usecases.GetLastSearchedCityUseCase
@@ -21,9 +21,9 @@ object UseCaseModule {
     @ViewModelScoped
     fun provideGetLastSearchedCityUseCase(
         repository: WeatherForecastRepository,
-        resourceProvider: ResourceProvider
+        resourceProviderImpl: ResourceProviderImpl
     ): GetLastSearchedCityUseCase {
-        return GetLastSearchedCityUseCase(repository, resourceProvider)
+        return GetLastSearchedCityUseCase(repository, resourceProviderImpl)
     }
 
     @Provides
@@ -39,12 +39,12 @@ object UseCaseModule {
     fun provideGetWeekCityWeatherForecastByIdUseCase(
         repository: WeatherForecastRepository,
         exceptionHandler: ExceptionHandler,
-        resourceProvider: ResourceProvider
+        resourceProviderImpl: ResourceProviderImpl
     ): GetWeekCityWeatherForecastByIdUseCase {
         return GetWeekCityWeatherForecastByIdUseCase(
             repository,
             exceptionHandler,
-            resourceProvider
+            resourceProviderImpl
         )
     }
 
@@ -55,14 +55,14 @@ object UseCaseModule {
         insertWeatherForecastResponseToLocalUseCase: InsertWeatherForecastResponseToLocalUseCase,
         getLastSearchedCityUseCase: GetLastSearchedCityUseCase,
         exceptionHandler: ExceptionHandler,
-        resourceProvider: ResourceProvider
+        resourceProviderImpl: ResourceProviderImpl
     ): GetLastCityOrFetchFromRemoteUseCase {
         return GetLastCityOrFetchFromRemoteUseCase(
             repository,
             getLastSearchedCityUseCase,
             insertWeatherForecastResponseToLocalUseCase,
             exceptionHandler,
-            resourceProvider
+            resourceProviderImpl
         )
     }
 }

@@ -2,7 +2,7 @@ package com.ab.weather_now_later.di
 
 import android.content.Context
 import com.ab.core.utils.error.ExceptionHandler
-import com.ab.core.utils.resource.ResourceProvider
+import com.ab.core.utils.resource.ResourceProviderImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -17,14 +17,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideResourceProvider(@ApplicationContext context: Context): ResourceProvider {
-        return ResourceProvider(context)
+    fun provideResourceProvider(@ApplicationContext context: Context): ResourceProviderImpl {
+        return ResourceProviderImpl(context)
     }
 
     @Provides
     @Singleton
     fun provideExceptionHandler(
         gson: Gson,
-        resourceProvider: ResourceProvider
-    ): ExceptionHandler = ExceptionHandler(gson, resourceProvider)
+        resourceProviderImpl: ResourceProviderImpl
+    ): ExceptionHandler = ExceptionHandler(gson, resourceProviderImpl)
 }

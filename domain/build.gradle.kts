@@ -43,6 +43,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockwebserver)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
+
+    androidTestImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.room.testing)
+
     // Room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)

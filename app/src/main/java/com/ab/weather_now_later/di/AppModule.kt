@@ -26,6 +26,6 @@ object AppModule {
     @Singleton
     fun provideExceptionHandler(
         gson: Gson,
-        resourceProviderImpl: ResourceProviderImpl
-    ): ExceptionHandler = ExceptionHandler(gson, resourceProviderImpl)
+        resourceProvider: ResourceProvider
+    ): ExceptionHandler = ExceptionHandler(gson, resourceProvider)
 }

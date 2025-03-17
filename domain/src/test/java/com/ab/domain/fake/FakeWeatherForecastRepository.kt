@@ -1,4 +1,4 @@
-package com.ab.domain
+package com.ab.domain.fake
 
 import com.ab.domain.model.dto.CityDto
 import com.ab.domain.model.dto.CoordinatesDto
@@ -13,8 +13,6 @@ import com.ab.domain.model.entity.WeatherForecastEntity
 import com.ab.domain.model.entity.relations.CityWithWeatherForecastDetailsEntityRel
 import com.ab.domain.model.entity.relations.WeatherForecastDetailsEntityRel
 import com.ab.domain.repository.WeatherForecastRepository
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 
 class FakeWeatherForecastRepository : WeatherForecastRepository {
 

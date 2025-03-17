@@ -1,4 +1,4 @@
-package com.ab.domain
+package com.ab.domain.fake
 
 import com.ab.domain.model.entity.CityEntity
 import com.ab.domain.model.entity.TemperatureEntity

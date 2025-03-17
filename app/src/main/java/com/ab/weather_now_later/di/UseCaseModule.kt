@@ -1,6 +1,7 @@
 package com.ab.weather_now_later.di
 
 import com.ab.core.utils.error.ExceptionHandler
+import com.ab.core.utils.resource.ResourceProvider
 import com.ab.core.utils.resource.ResourceProviderImpl
 import com.ab.domain.repository.WeatherForecastRepository
 import com.ab.domain.usecases.GetLastCityOrFetchFromRemoteUseCase
@@ -21,9 +22,9 @@ object UseCaseModule {
     @ViewModelScoped
     fun provideGetLastSearchedCityUseCase(
         repository: WeatherForecastRepository,
-        resourceProviderImpl: ResourceProviderImpl
+        resourceProvider: ResourceProvider
     ): GetLastSearchedCityUseCase {
-        return GetLastSearchedCityUseCase(repository, resourceProviderImpl)
+        return GetLastSearchedCityUseCase(repository, resourceProvider)
     }
 
     @Provides
@@ -39,12 +40,12 @@ object UseCaseModule {
     fun provideGetWeekCityWeatherForecastByIdUseCase(
         repository: WeatherForecastRepository,
         exceptionHandler: ExceptionHandler,
-        resourceProviderImpl: ResourceProviderImpl
+        resourceProvider: ResourceProvider
     ): GetWeekCityWeatherForecastByIdUseCase {
         return GetWeekCityWeatherForecastByIdUseCase(
             repository,
             exceptionHandler,
-            resourceProviderImpl
+            resourceProvider
         )
     }
 
@@ -55,14 +56,14 @@ object UseCaseModule {
         insertWeatherForecastResponseToLocalUseCase: InsertWeatherForecastResponseToLocalUseCase,
         getLastSearchedCityUseCase: GetLastSearchedCityUseCase,
         exceptionHandler: ExceptionHandler,
-        resourceProviderImpl: ResourceProviderImpl
+        resourceProvider: ResourceProvider
     ): GetLastCityOrFetchFromRemoteUseCase {
         return GetLastCityOrFetchFromRemoteUseCase(
             repository,
             getLastSearchedCityUseCase,
             insertWeatherForecastResponseToLocalUseCase,
             exceptionHandler,
-            resourceProviderImpl
+            resourceProvider
         )
     }
 }

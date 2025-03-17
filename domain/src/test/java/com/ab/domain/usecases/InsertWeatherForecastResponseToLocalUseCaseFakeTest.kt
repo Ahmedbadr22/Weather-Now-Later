@@ -1,12 +1,12 @@
-package com.ab.domain
+package com.ab.domain.usecases
 
+import com.ab.domain.fake.FakeWeatherForecastRepository
 import com.ab.domain.model.dto.CityDto
 import com.ab.domain.model.dto.CoordinatesDto
 import com.ab.domain.model.dto.TemperatureDto
 import com.ab.domain.model.dto.WeatherConditionDto
 import com.ab.domain.model.dto.WeatherForecastDto
 import com.ab.domain.model.dto.WeatherForecastResponseDto
-import com.ab.domain.usecases.InsertWeatherForecastResponseToLocalUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Test

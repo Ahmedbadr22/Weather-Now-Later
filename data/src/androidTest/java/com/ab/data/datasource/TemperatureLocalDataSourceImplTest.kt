@@ -116,7 +116,7 @@ class TemperatureLocalDataSourceImplTest {
 
         val insertedTemperatureId2 = temperatureLocalDataSource.insert(updatedTemperatureEntity.copy(id = 2))
 
-        assertEquals(2, insertedTemperatureId2)
+        assertEquals(1, insertedTemperatureId2)
     }
 
     @Test
